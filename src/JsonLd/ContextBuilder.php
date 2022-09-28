@@ -133,8 +133,11 @@ final class ContextBuilder implements AnonymousContextBuilderInterface
                 $shortName
             ),
             '@type' => $shortName,
-            '@id' => $context['iri'] ?? '_:'.(\function_exists('spl_object_id') ? spl_object_id($object) : spl_object_hash($object)),
         ];
+
+        if (isset($context['iri'])) {
+            $jsonLdContext['@id'] = $context['iri'];
+        }
 
         if ($context['has_context'] ?? false) {
             unset($jsonLdContext['@context']);
